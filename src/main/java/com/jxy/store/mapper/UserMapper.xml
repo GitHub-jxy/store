@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxy.store.mapper.UserMapper" >
+
+    <resultMap id="findByUserNameMap" type="com.jxy.store.entity.User">
+        <id column="uid" property="uid"></id>
+        <result column="is_delete" property="isDelete"></result>
+        <result column="created_time" property="createdTime"></result>
+        <result column="created_user" property="createdUser"></result>
+        <result column="modified_time" property="modifiedTime"></result>
+        <result column="modified_user" property="modifiedUser"></result>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
+        INSERT INTO
+            t_user (username, password, salt, phone, email, gender, avatar, is_delete, created_user, created_time, modified_user, modified_time)
+        VALUES
+            (#{username}, #{password}, #{salt}, #{phone}, #{email}, #{gender}, #{avatar}, #{isDelete}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime})
+    </insert>
+    
+    <select id="findByUserName" resultMap="findByUserNameMap">
+        select * from t_user where username = #{username}
+    </select>
+</mapper>
