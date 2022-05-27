@@ -39,5 +39,6 @@ public class UserController extends BaseController {
     public JsonResult<Void> reg(User user) {
         iUserService.reg(user);
         return new JsonResult<>(OK);
+
     }
 }
