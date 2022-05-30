@@ -18,11 +18,11 @@ public class BaseController {
         //判断数据类型是否属于UserNameDuplicatedException类型的
         if(e instanceof UserNameDuplicatedException){
             //如果是/属于
-            result.setCode(4000);
+            result.setState(4000);
             result.setMessage("用户名重复");
         }
         if(e instanceof InstantiationError ){
-            result.setCode(4500);
+            result.setState(4500);
             result.setMessage("插入时异常");
         }
         return result;

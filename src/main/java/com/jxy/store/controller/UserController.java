@@ -38,7 +38,7 @@ public class UserController extends BaseController {
     @RequestMapping("reg")
     public JsonResult<Void> reg(User user) {
         iUserService.reg(user);
-        return new JsonResult<>(OK);
+        return new JsonResult<Void>(OK);
 
     }
 }
