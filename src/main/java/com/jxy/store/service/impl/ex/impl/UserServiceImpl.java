@@ -3,8 +3,7 @@ package com.jxy.store.service.impl.ex.impl;
 import com.jxy.store.entity.User;
 import com.jxy.store.mapper.UserMapper;
 import com.jxy.store.service.impl.ex.IUserService;
-import com.jxy.store.service.impl.ex.ex.InsertException;
-import com.jxy.store.service.impl.ex.ex.UserNameDuplicatedException;
+import com.jxy.store.service.impl.ex.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -56,8 +55,38 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
-    private String getMD5Password(String password,String salt){
-        for (int i = 0; i < 3 ; i++) {
+    @Override
+    public User login(String username, String password) {
+        User result = userMapper.findByUserName(username);
+        if (username != null) {
+            if (result == null) {
+                throw new UserNotFoundException("用户不能为空！");
+            }
+            //不等于空说明有用户
+            //获取到盐值
+            String salt = result.getSalt();
+            //获取到密码
+            String resultPassword = result.getPassword();
+            String md5Password = getMD5Password(password, salt);
+            //拿到时候被删除的信息
+            Integer isDelete = result.getIsDelete();
+            if(!md5Password.equals(resultPassword)){
+                //两者密码进行比对
+                throw new PasswordNotMatchException("密码不正确！");
+            }
+            if(isDelete==1){
+                throw new UserNotFoundException("该用户已被删除！");
+            }
+        }
+        User user = new User();
+        user.setUid(result.getUid());
+        user.setUsername(result.getUsername());
+        user.setAvatar(result.getAvatar());
+        return user;
+    }
+
+    private String getMD5Password(String password, String salt) {
+        for (int i = 0; i < 3; i++) {
             //三次加密
             password = DigestUtils.md5DigestAsHex((salt + password + salt).getBytes()).toUpperCase();
         }

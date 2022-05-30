@@ -9,4 +9,12 @@ public interface IUserService {
      * @param user
      */
     void reg(User user);
+
+    /**
+     * 用户登录接口
+     * @param username
+     * @param password
+     * @return
+     */
+    User login(String username,String password);
 }

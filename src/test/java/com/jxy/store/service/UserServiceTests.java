@@ -30,4 +30,15 @@ public class UserServiceTests {
         }
     }
 
+    @Test
+    public void login(){
+
+        User aaa = iUserService.login("aaaa", "123");
+        if(aaa!=null){
+            System.out.println("登录成功");
+        }else{
+            System.out.println("登陆失败！");
+        }
+    }
+
 }

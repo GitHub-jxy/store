@@ -1,7 +1,9 @@
 package com.jxy.store.controller;
 
+import com.jxy.store.service.impl.ex.ex.PasswordNotMatchException;
 import com.jxy.store.service.impl.ex.ex.ServiceException;
 import com.jxy.store.service.impl.ex.ex.UserNameDuplicatedException;
+import com.jxy.store.service.impl.ex.ex.UserNotFoundException;
 import com.jxy.store.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -20,10 +22,15 @@ public class BaseController {
             //如果是/属于
             result.setState(4000);
             result.setMessage("用户名重复");
-        }
-        if(e instanceof InstantiationError ){
-            result.setState(4500);
+        }else if(e instanceof InstantiationError ){
+            result.setState(5000);
             result.setMessage("插入时异常");
+        }else if(e instanceof UserNotFoundException){
+            result.setState(5001);
+            result.setMessage("用户名不存在");
+        }else if(e instanceof PasswordNotMatchException){
+            result.setState(5002);
+            result.setMessage("用户名密码不正确");
         }
         return result;
     }
