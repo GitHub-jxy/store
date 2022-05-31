@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("users")
 public class UserController extends BaseController {
@@ -43,8 +45,14 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping("login")
-    public JsonResult<User> login(User user){
+    public JsonResult<User> login(User user, HttpSession session){
         User data = iUserService.login(user.getUsername(), user.getPassword());
+        //向session对象中完成数据的绑定（全局的）
+        session.setAttribute("uid",data.getUid());
+        session.setAttribute("username",data.getUsername());
+        session.setAttribute("password",data.getPassword());
+        session.setAttribute("avatar",data.getAvatar());
+        System.out.println(getUidFromSession(session));
         return new JsonResult<User>(OK,data);
     }
 }

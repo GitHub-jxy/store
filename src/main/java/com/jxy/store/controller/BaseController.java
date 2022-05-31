@@ -7,6 +7,8 @@ import com.jxy.store.service.impl.ex.ex.UserNotFoundException;
 import com.jxy.store.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpSession;
+
 public class BaseController {
 
     public static final int OK = 200;
@@ -35,5 +37,22 @@ public class BaseController {
         return result;
     }
 
+    /**
+     * 获取session中的用户ID
+     * @param httpSession session对象
+     * @return 当前登录的用户id
+     */
+    protected final Integer getUidFromSession(HttpSession httpSession){
+        return Integer.valueOf(httpSession.getAttribute("uid").toString());
+    }
+
+    /**
+     * 获取session中的用户名
+     * @param httpSession session对象
+     * @return 当前登录的用户id
+     */
+    protected final String getUsernameFromSession(HttpSession httpSession){
+        return httpSession.getAttribute("username").toString();
+    }
 
 }
