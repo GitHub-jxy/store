@@ -4,6 +4,8 @@ import com.jxy.store.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+
 /**
  * 用户模块持久层接口
  */
@@ -23,4 +25,21 @@ public interface UserMapper {
      * @return
      */
     User findByUserName(String name);
+
+    /**
+     *  修改密码
+     * @param uid 用户ID，根据用户ID修改面
+     * @param password 原密码，作比较
+     * @param modifiedUser 修改者
+     * @param modifiedTime 修改时间
+     * @return
+     */
+    Integer updatePasswordByUid(Integer uid, String password, String modifiedUser, Date modifiedTime);
+
+    /**
+     * 查询该用户是否存在
+     * @param uid
+     * @return
+     */
+    User findByUid(Integer uid);
 }

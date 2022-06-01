@@ -50,9 +50,10 @@ public class UserController extends BaseController {
         //向session对象中完成数据的绑定（全局的）
         session.setAttribute("uid",data.getUid());
         session.setAttribute("username",data.getUsername());
+        //暂时没使用，需要在BaseController里面写上对应的session
         session.setAttribute("password",data.getPassword());
         session.setAttribute("avatar",data.getAvatar());
-        System.out.println(getUidFromSession(session));
+//        System.out.println(getUidFromSession(session));
         return new JsonResult<User>(OK,data);
     }
 }

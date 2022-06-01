@@ -22,5 +22,13 @@
     
     <select id="findByUserName" resultMap="findByUserNameMap">
         select * from t_user where username = #{username}
+    </select><select id="updatePasswordByuid" resultType="java.lang.Integer"></select>
+
+    <update id="updatePasswordByUid">
+        update t_user set password = #{password} where uid = #{uid}
+    </update>
+
+    <select id="findByUid">
+        select * from t_user where uid = #{uid}
     </select>
 </mapper>
