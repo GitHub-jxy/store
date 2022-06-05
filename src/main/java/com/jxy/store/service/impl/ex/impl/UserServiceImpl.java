@@ -87,8 +87,6 @@ public class UserServiceImpl implements IUserService {
     public void changePassword(Integer uid, String username, String oldPassword, String newPassword) {
         User resultID = userMapper.findByUid(uid);
         User resultName = userMapper.findByUserName(username);
-        System.out.println(resultID);
-        System.out.println(resultName);
         if (resultID == null || resultName == null) {
             throw new UpdateException("修改密码时，无法查找到对应的账户！");
         }

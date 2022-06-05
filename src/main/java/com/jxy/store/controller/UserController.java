@@ -2,9 +2,6 @@ package com.jxy.store.controller;
 
 import com.jxy.store.entity.User;
 import com.jxy.store.service.impl.ex.IUserService;
-import com.jxy.store.service.impl.ex.ex.InsertException;
-import com.jxy.store.service.impl.ex.ex.ServiceException;
-import com.jxy.store.service.impl.ex.ex.UserNameDuplicatedException;
 import com.jxy.store.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,5 +52,13 @@ public class UserController extends BaseController {
         session.setAttribute("avatar",data.getAvatar());
 //        System.out.println(getUidFromSession(session));
         return new JsonResult<User>(OK,data);
+    }
+
+    @RequestMapping("change_password")
+    public JsonResult<Void> changePassword(HttpSession session,String oldPassword, String newPassword){
+        Integer uid = getUidFromSession(session);
+        String username = getUsernameFromSession(session);
+        iUserService.changePassword(uid,username,oldPassword,newPassword);
+        return new JsonResult<Void>(OK);
     }
 }
