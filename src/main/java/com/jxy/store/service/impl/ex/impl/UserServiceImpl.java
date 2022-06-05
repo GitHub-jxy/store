@@ -7,8 +7,6 @@ import com.jxy.store.service.impl.ex.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.util.SystemPropertyUtils;
 
 import java.util.Date;
 import java.util.UUID;
@@ -70,11 +68,11 @@ public class UserServiceImpl implements IUserService {
             String md5Password = getMD5Password(password, salt);
             //拿到时候被删除的信息
             Integer isDelete = result.getIsDelete();
-            if(!md5Password.equals(resultPassword)){
+            if (!md5Password.equals(resultPassword)) {
                 //两者密码进行比对
                 throw new PasswordNotMatchException("密码不正确！");
             }
-            if(isDelete==1){
+            if (isDelete == 1) {
                 throw new UserNotFoundException("该用户已被删除！");
             }
         }
@@ -83,6 +81,37 @@ public class UserServiceImpl implements IUserService {
         user.setUsername(result.getUsername());
         user.setAvatar(result.getAvatar());
         return user;
+    }
+
+    @Override
+    public void changePassword(Integer uid, String username, String oldPassword, String newPassword) {
+        User resultID = userMapper.findByUid(uid);
+        User resultName = userMapper.findByUserName(username);
+        System.out.println(resultID);
+        System.out.println(resultName);
+        if (resultID == null || resultName == null) {
+            throw new UpdateException("修改密码时，无法查找到对应的账户！");
+        }
+
+        //拿到用户的盐值
+        String salt = resultName.getSalt();
+        //拿到用户的密码
+        String password = resultName.getPassword();
+        //进行MD5加密
+        String md5Password = getMD5Password(oldPassword, salt);
+        //密码进行比较
+        if(!password.equals(md5Password)){
+            throw new UpdateException("当前密码与原密码不一致，请重新输入！");
+        }
+        String newMD5Password = getMD5Password(newPassword, salt);
+//        //修改密码
+//        resultName.setPassword(newMD5Password);
+        Integer integer = userMapper.updatePasswordByUid(uid, newMD5Password, username, new Date());
+        if(integer!=null){
+            System.out.println("修改成功！");
+        }else{
+            throw new InsertException("更新时产生未知的异常！");
+        }
     }
 
     private String getMD5Password(String password, String salt) {

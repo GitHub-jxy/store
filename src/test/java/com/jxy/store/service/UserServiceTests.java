@@ -1,7 +1,6 @@
 package com.jxy.store.service;
 
 import com.jxy.store.entity.User;
-import com.jxy.store.mapper.UserMapper;
 import com.jxy.store.service.impl.ex.IUserService;
 import com.jxy.store.service.impl.ex.ex.ServiceException;
 import org.junit.Test;
@@ -21,7 +20,7 @@ public class UserServiceTests {
     public void insert(){
         try {
             User user = new User();
-            user.setUsername("张三7");
+            user.setUsername("bbb");
             user.setPassword("123");
             iUserService.reg(user);
             System.out.println("OK");
@@ -32,13 +31,17 @@ public class UserServiceTests {
 
     @Test
     public void login(){
-
         User aaa = iUserService.login("aaaa", "123");
         if(aaa!=null){
             System.out.println("登录成功");
         }else{
             System.out.println("登陆失败！");
         }
+    }
+
+    @Test
+    public void changePassword(){
+        iUserService.changePassword(2,"bbb","123","123456");
     }
 
 }

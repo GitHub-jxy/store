@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jxy.store.mapper.UserMapper" >
+<mapper namespace="com.jxy.store.mapper.UserMapper">
 
     <resultMap id="findByUserNameMap" type="com.jxy.store.entity.User">
         <id column="uid" property="uid"></id>
@@ -19,16 +19,18 @@
         VALUES
             (#{username}, #{password}, #{salt}, #{phone}, #{email}, #{gender}, #{avatar}, #{isDelete}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime})
     </insert>
-    
+
     <select id="findByUserName" resultMap="findByUserNameMap">
         select * from t_user where username = #{username}
-    </select><select id="updatePasswordByuid" resultType="java.lang.Integer"></select>
+    </select>
+    <select id="updatePasswordByuid" resultType="java.lang.Integer"></select>
 
     <update id="updatePasswordByUid">
-        update t_user set password = #{password} where uid = #{uid}
+        update t_user set password = #{password},modified_user = #{modifiedUser},modified_time = #{modifiedTime}
+        where uid = #{uid}
     </update>
 
-    <select id="findByUid">
+    <select id="findByUid" resultMap="findByUserNameMap">
         select * from t_user where uid = #{uid}
     </select>
 </mapper>

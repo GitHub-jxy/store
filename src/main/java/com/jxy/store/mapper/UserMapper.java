@@ -1,7 +1,6 @@
 package com.jxy.store.mapper;
 
 import com.jxy.store.entity.User;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -39,7 +38,7 @@ public interface UserMapper {
     /**
      * 查询该用户是否存在
      * @param uid
-     * @return
+     * @return 找到的话返回对象，反之返回null
      */
     User findByUid(Integer uid);
 }
