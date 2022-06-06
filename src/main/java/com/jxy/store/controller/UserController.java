@@ -61,4 +61,19 @@ public class UserController extends BaseController {
         iUserService.changePassword(uid,username,oldPassword,newPassword);
         return new JsonResult<Void>(OK);
     }
+
+    @RequestMapping("get_by_uid")
+    public JsonResult<User> getByUid(HttpSession session){
+        Integer uid = getUidFromSession(session);
+        User data = iUserService.getByUid(uid);
+        return new JsonResult<User>(OK,data);
+    }
+
+    @RequestMapping("change_info")
+    public JsonResult<Void> changeInfo(HttpSession session,User user){
+        Integer uid = getUidFromSession(session);
+        String username = getUsernameFromSession(session);
+        iUserService.changeInfo(uid,username,user);
+        return new JsonResult<Void>(OK);
+    }
 }

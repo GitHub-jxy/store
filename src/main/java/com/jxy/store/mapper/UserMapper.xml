@@ -33,4 +33,22 @@
     <select id="findByUid" resultMap="findByUserNameMap">
         select * from t_user where uid = #{uid}
     </select>
+
+    <sql id="updateInfoByUidId">
+        <if test="gender!=null">gender = #{gender},</if>
+        <if test="phone!=null">phone = #{phone},</if>
+        <if test="email!=null">email = #{email},</if>
+        modified_user = #{modifiedUser},
+        modified_time = #{modifiedTime}
+    </sql>
+    <update id="updateInfoByUid">
+        update t_user set
+            <if test="gender!=null">gender = #{gender},</if>
+            <if test="phone!=null">phone = #{phone},</if>
+            <if test="email!=null">email = #{email},</if>
+            modified_user = #{modifiedUser},
+            modified_time = #{modifiedTime}
+        where
+            uid = #{uid}
+    </update>
 </mapper>

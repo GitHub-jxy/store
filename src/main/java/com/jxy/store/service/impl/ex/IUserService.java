@@ -26,4 +26,20 @@ public interface IUserService {
      * @param newPassword 用户修改的新密码
      */
     void changePassword(Integer uid,String  username, String oldPassword,String newPassword);
+
+    /**
+     * 根据用户的id查询出用户的信息
+     * @uid 用户id
+     * @return 用户信息
+     */
+    User getByUid(Integer uid);
+
+    /**
+     * 修改用户信息
+     * @param uid 用户id
+     * @param username 用户名称
+     * @param user 用户数据
+     */
+
+    void changeInfo(Integer uid,String  username,User user);
 }

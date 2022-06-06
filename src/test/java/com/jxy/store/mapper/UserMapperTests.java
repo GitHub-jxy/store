@@ -51,4 +51,19 @@ public class UserMapperTests {
         }
     }
 
+    @Test
+    public void updateInfoByUid(){
+        User user = new User();
+        user.setUid(1);
+        user.setGender(0);
+        user.setPhone("17630888888");
+        user.setEmail("2581039666@qq.com");
+        Integer integer = userMapper.updateInfoByUid(user);
+        if(integer>0){
+            System.out.println("修改成功");
+        }else{
+            System.out.println("修改失败");
+        }
+    }
+
 }
