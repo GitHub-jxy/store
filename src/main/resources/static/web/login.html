@@ -152,8 +152,11 @@
 					dataType: "JSON",
 					success: function (json) {
 						if(json.state == 200){
-							alert("登录成功！")
+							// alert("登录成功！")
 							location.href = "index.html";
+							//将头像存入cookies中
+							//$.cookie(key,value,{expire:X})  后面的是，时间单位，单位：天
+							$.cookie("avatar",json.data.avatar,{expires: 7});
 						}else{
 							alert("登录失败！")
 						}

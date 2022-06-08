@@ -1,4 +1,4 @@
-package com.jxy.store.service.impl.ex.ex;
+package com.jxy.store.service.ex;
 
 /**
  * 运行时的异常

@@ -1,9 +1,9 @@
-package com.jxy.store.service.impl.ex.impl;
+package com.jxy.store.service.impl;
 
 import com.jxy.store.entity.User;
 import com.jxy.store.mapper.UserMapper;
-import com.jxy.store.service.impl.ex.IUserService;
-import com.jxy.store.service.impl.ex.ex.*;
+import com.jxy.store.service.ex.*;
+import com.jxy.store.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -139,8 +139,18 @@ public class UserServiceImpl implements IUserService {
         Integer integer = userMapper.updateInfoByUid(user);
         if (integer != 1) {
             throw new UpdateException("修改信息时，出现未知的异常！");
-        } else {
-            System.out.println("修改信息成功！");
+        }
+    }
+
+    @Override
+    public void changeAvatar(Integer uid, String avatar, String username) {
+        User result = userMapper.findByUid(uid);
+        if (result == null || result.getIsDelete() == 1) {
+            throw new UserNotFoundException("用户数据未找到或已删除！");
+        }
+        Integer integer = userMapper.updateAvatarByUid(uid, avatar, username, new Date());
+        if (integer != 1) {
+            throw new UpdateException("修改信息时，出现未知的异常！");
         }
     }
 

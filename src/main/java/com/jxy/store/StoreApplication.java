@@ -13,7 +13,7 @@ import javax.servlet.MultipartConfigElement;
 import javax.servlet.annotation.MultipartConfig;
 
 //表示配置/修改类
-@Configuration
+//@Configuration
 
 @MapperScan("com.jxy.store.mapper")
 @SpringBootApplication
@@ -30,22 +30,22 @@ public class StoreApplication {
      * 通过工厂模式来，控制文件上传的大小
      * @return
      */
-    @Bean
-    public MultipartConfigElement getMultipartConfigElement(){
-        //创建工厂
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-
-        //配置出厂要求
-        //设置文件的大小，最大为10,单位为M
-        factory.setMaxFileSize(DataSize.of(10, DataUnit.MEGABYTES));
-        //设置请求的大小，最大为10，单位为M
-        factory.setMaxRequestSize(DataSize.of(15, DataUnit.MEGABYTES));
-
-        //配置完成之后，开始创建
-        MultipartConfigElement multipartConfig = factory.createMultipartConfig();
-
-        //返回
-        return multipartConfig;
-    }
+//    @Bean
+//    public MultipartConfigElement getMultipartConfigElement(){
+//        //创建工厂
+//        MultipartConfigFactory factory = new MultipartConfigFactory();
+//
+//        //配置出厂要求
+//        //设置文件的大小，最大为10,单位为M
+//        factory.setMaxFileSize(DataSize.of(10, DataUnit.MEGABYTES));
+//        //设置请求的大小，最大为10，单位为M
+//        factory.setMaxRequestSize(DataSize.of(15, DataUnit.MEGABYTES));
+//
+//        //配置完成之后，开始创建
+//        MultipartConfigElement multipartConfig = factory.createMultipartConfig();
+//
+//        //返回
+//        return multipartConfig;
+//    }
 
 }

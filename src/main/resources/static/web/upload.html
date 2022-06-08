@@ -15,6 +15,8 @@
 		<script src="../bootstrap3/js/bootstrap.js"></script>
 		<!-- 字体图标 -->
 		<link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+		<!--	引入cookies	-->
+		<script src="../bootstrap3/js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
 		<link rel="stylesheet" type="text/css" href="../css/top.css" />
 		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
@@ -136,7 +138,8 @@
 					</ul>
 					<div class="panel-body">
 						<!--上传头像表单开始-->
-						<form class="form-horizontal" role="form">
+						<form id = "form-change-avatar"
+							  class="form-horizontal" role="form">
 							<div class="form-group">
 								<label class="col-md-2 control-label">选择头像:</label>
 								<div class="col-md-5">
@@ -149,7 +152,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
-									<input type="submit" class="btn btn-primary" value="上传" />
+									<input type="button" id = "btn-change-avatar" class="btn btn-primary" value="上传" />
 								</div>
 							</div>
 						</form>
@@ -242,6 +245,49 @@
 			</div>
 		</footer>
 		<!--页脚结束-->
+		<script type="text/javascript">
+
+			//全局刷新
+			$(document).ready(function () {
+				//拿到cookies中的avatar值
+				let avatar = $.cookie("avatar");
+				//把cookie中的值设置到#img-avatar标签中
+				$("#img-avatar").attr("src",avatar);
+			});
+
+			$("#btn-change-avatar").click(function () {
+				$.ajax({
+					url: "/users/change_avatar",
+					type: "POST",
+					data: new FormData($("#form-change-avatar")[0]),
+					/**
+					 * 是否处理数据 默认为开启，则被处理成字符串形式，关闭，则不对数据进行处理
+					 * processData: false,
+					 * 数据提交的类型 默认为开始，被处理成串的类型提交，关闭则保持原有的类型进行提交
+					 * contentType: false,
+					 */
+					processData: false,
+					contentType: false,
+					dataType: "JSON",
+					success: function (json) {
+						if(json.state == 200){
+							// alert("头像修改成功！")
+							/**
+							 * 将服务器端返回的头像地址设置到img标签中
+							 * attr("属性","属性值")：给某个属性赋值
+							 */
+							$("#img-avatar").attr("src",json.data);
+							$.cookie("avatar",json.data,{expires: 7});
+						}else{
+							alert("头像修改失败！")
+						}
+					},
+					error: function (xhr) {
+						alert("头像修改时产生未知的错误！"+xhr.status)
+					}
+				})
+			});
+		</script>
 	</body>
 
 </html>

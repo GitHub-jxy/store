@@ -1,8 +1,7 @@
 package com.jxy.store.service;
 
 import com.jxy.store.entity.User;
-import com.jxy.store.service.impl.ex.IUserService;
-import com.jxy.store.service.impl.ex.ex.ServiceException;
+import com.jxy.store.service.ex.ServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,4 +55,11 @@ public class UserServiceTests {
         user.setEmail("abcd@qq.com");
         iUserService.changeInfo(1,"aaa",user);
     }
+
+    @Test
+    public void changeAvatar(){
+        iUserService.changeAvatar(3,"D:123/123","李四");
+    }
+
+
 }

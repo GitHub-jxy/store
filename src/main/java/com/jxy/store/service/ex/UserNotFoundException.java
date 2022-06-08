@@ -1,4 +1,4 @@
-package com.jxy.store.service.impl.ex.ex;
+package com.jxy.store.service.ex;
 
 /** 用户数据不存在的异常 */
 public class UserNotFoundException extends ServiceException {

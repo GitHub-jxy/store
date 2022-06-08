@@ -1,4 +1,4 @@
-package com.jxy.store.service.impl.ex;
+package com.jxy.store.service;
 
 import com.jxy.store.entity.User;
 
@@ -42,4 +42,12 @@ public interface IUserService {
      */
 
     void changeInfo(Integer uid,String  username,User user);
+
+    /**
+     * 上传/修改头像
+     * @param uid
+     * @param avatar
+     * @param username
+     */
+    void changeAvatar(Integer uid,String avatar, String username);
 }

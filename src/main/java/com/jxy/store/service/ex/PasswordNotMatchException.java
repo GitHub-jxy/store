@@ -1,4 +1,4 @@
-package com.jxy.store.service.impl.ex.ex;
+package com.jxy.store.service.ex;
 
 /** 密码验证失败的异常 */
 public class PasswordNotMatchException extends ServiceException {

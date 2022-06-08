@@ -48,4 +48,14 @@ public interface UserMapper {
      * @return 返回影响的行数
      */
     Integer updateInfoByUid(User user);
+
+    /**
+     * 通过uid来修改/上传用户头像
+     * @param uid 用户id
+     * @param avatar 头像
+     * @param modifiedUser 修改人
+     * @param modifiedTime 修改时间
+     * @return 返回受影响的行数
+     */
+    Integer updateAvatarByUid(Integer uid, String avatar, String modifiedUser, Date modifiedTime);
 }

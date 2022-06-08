@@ -66,4 +66,13 @@ public class UserMapperTests {
         }
     }
 
+    @Test
+    public void updateAvtar(){
+        //Integer uid, String avatar, String modifiedUser, Date modifiedTime
+        Integer integer = userMapper.updateAvatarByUid(1,"D:abc.jpg","张三",new Date());
+        if(integer!=1){
+            System.out.println("修改失败/修改时产生异常！");
+        }
+    }
+
 }

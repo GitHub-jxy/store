@@ -1,4 +1,4 @@
-package com.jxy.store.service.impl.ex.ex;
+package com.jxy.store.service.ex;
 
 /**
  * 用户名被占用
