@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace指向mapper.xml所对应的Mapper接口-->
+<mapper namespace="com.jxy.store.mapper.AddressMapper">
+    <!--
+      `uid` int DEFAULT NULL COMMENT '归属的用户id',
+      `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '收货人姓名',
+      `province_name` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '省-名称',
+      `province_code` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '省-行政代号',
+      `city_name` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '市-名称',
+      `city_code` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '市-行政代号',
+      `area_name` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '区-名称',
+      `area_code` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '区-行政代号',
+      `zip` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '邮政编码',
+      `address` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '详细地址',
+      `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '手机',
+      `tel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '固话',
+      `tag` varchar(6) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '标签',
+      `is_default` int DEFAULT NULL COMMENT '是否默认：0-不默认，1-默认',
+    -->
+
+     <resultMap id="AddressEntityMap" type="com.jxy.store.entity.Address">
+        <id column="aid" property="aid"/>
+        <result column="province_code" property="provinceCode"/>
+        <result column="province_name" property="provinceName"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="city_name" property="cityName"/>
+        <result column="area_code" property="areaCode"/>
+        <result column="area_name" property="areaName"/>
+        <result column="is_default" property="isDefault"/>
+        <result column="created_user" property="createdUser"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="modified_user" property="modifiedUser"/>
+        <result column="modified_time" property="modifiedTime"/>
+    </resultMap>
+
+    <sql id="insertKey">
+        uid,
+        name,
+        province_name,
+        province_code,
+        city_name,
+        city_code,
+        area_name,
+        area_code,
+        zip,
+        address,
+        phone,
+        tel,
+        tag,
+        is_default
+    </sql>
+
+    <sql id="insertVal">
+        <if test="uid != null">uid = #{uid},</if>
+        <if test="name != null">name = #{name},</if>
+        <if test="province_name != null">province_name = #{provinceName},</if>
+        <if test="province_code != null">province_code = #{provinceCode},</if>
+        <if test="city_name != null">city_name = #{cityName},</if>
+        <if test="city_code != null">city_code = #{cityCode},</if>
+        <if test="area_name != null">area_name = #{areaName},</if>
+        <if test="area_code != null">area_code = #{areaCode},</if>
+        <if test="zip != null">zip = #{zip},</if>
+        <if test="address != null">address = #{address},</if>
+        <if test="phone != null">phone = #{phone},</if>
+        <if test="tel != null">tel = #{tel},</if>
+        <if test="tag != null">tag = #{tag},</if>
+        <if test="is_default != null">is_default = #{isDefault}</if>
+    </sql>
+
+    <insert id="insertAddress" useGeneratedKeys="true" keyProperty="aid">
+        insert into t_address
+            (uid,
+            name,
+            province_name,
+            province_code,
+            city_name,
+            city_code,
+            area_name,
+            area_code,
+            zip,
+            address,
+            phone,
+            tel,
+            tag,
+            is_default)
+        values
+            (#{uid},
+            #{name},
+            #{provinceName},
+            #{provinceCode},
+            #{cityName},
+            #{cityCode},
+            #{areaName},
+            #{areaCode},
+            #{zip},
+            #{address},
+            #{phone},
+            #{tel},
+            #{tag},
+            #{isDefault})
+    </insert>
+
+    <select id="countByUid" resultType="java.lang.Integer">
+        select COUNT(*) from t_address where uid = #{uid}
+    </select>
+
+    <update id="updateByIsDefault" parameterType="java.lang.Integer">
+        update t_address set is_default = 1 where aid = #{aid}
+    </update>
+
+    <select id="selectAddressByUid" resultMap="AddressEntityMap">
+        select * from t_address where uid = #{uid}
+    </select>
+
+</mapper>
