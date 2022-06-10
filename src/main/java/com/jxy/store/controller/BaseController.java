@@ -59,6 +59,10 @@ public class BaseController {
             result.setState(6005);
             result.setMessage("上传的文件读写时出现异常");
         }
+        else if(e instanceof FileUploadIOException){
+            result.setState(7001);
+            result.setMessage("收货地址超出限制异常");
+        }
 
         return result;
     }
