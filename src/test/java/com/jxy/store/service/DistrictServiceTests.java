@@ -1,4 +1,4 @@
-package com.jxy.store.mapper;
+package com.jxy.store.service;
 
 import com.jxy.store.entity.District;
 import org.junit.Test;
@@ -9,25 +9,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DistrictMapperTests {
+public class DistrictServiceTests {
 
     @Autowired
-    DistrictMapper districtMapper;
+    DistrictService districtService;
 
     @Test
-    public void findByParent(){
-        List<District> byParent = districtMapper.findByParent("86");
+    public void getByParent(){
+        List<District> byParent = districtService.getByParent("86");
         for (District district : byParent) {
             System.out.println(district);
         }
-    }
-
-    @Test
-    public void findByCode(){
-        String name = districtMapper.findByCode("410000");
-        System.out.println(name);
     }
 
 }

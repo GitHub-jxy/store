@@ -10,4 +10,9 @@
         where parent = #{parent}
         order by code asc
     </select>
+
+    <select id="findByCode" resultType="java.lang.String">
+        select name from t_dict_district
+        where code = #{code}
+    </select>
 </mapper>
