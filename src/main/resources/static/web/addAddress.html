@@ -290,8 +290,132 @@
 		<!--页脚结束-->
 		<script type="text/javascript">
 
-			let defaultOption = "< option value = '0' > ---- 请选择 ---- < /option>";
-			$()
+			window.onmousemove = mouseMove();
+			function mouseMove(){
+				$.ajax({
+					url: "/district",
+					type: "GET",
+					data: "parent=" + 110000,
+					dataType: "JSON",
+					success: function(json) {
+						if (json.state == 200) {
+							let list = json.data;
+							// console.log("count=" + list.length);
+							for (let i = 0; i < list.length; i++) {
+								// console.log(list[i].name);
+								let option = '<option value="' + list[i].code + '">' + list[i].name + '</option>';
+								$("#city-list").append(option);
+							}
+						}else{
+							alert("获取城市信息失败! ");
+						}
+					}
+				});
+			}
+
+			let defaultOption = "<option value = '0'> ---- 请选择 ---- </option>";
+			$(document).ready(function () {
+				//定义一个函数
+				showProvinceList();
+				// 在省、市处追加一个请选择的标签
+				$("#city-list").append(defaultOption);
+				$("#area-list").append(defaultOption);
+			});
+
+			$("#province-list").change(function() {
+				showCityList();
+			});
+
+			$("#city-list").change(function() {
+				showAreaList();
+			});
+
+			function showCityList() {
+				let parent = $("#province-list").val();
+				//清空select下拉列表中的所有信息包括option元素
+				$("#city-list").empty();
+				$("#area-list").empty();
+
+				//添加默认值
+				$("#city-list").append(defaultOption);
+				$("#area-list").append(defaultOption);
+
+				if (parent == 0) {
+					return;
+				}
+
+				$.ajax({
+					url: "/district",
+					type: "GET",
+					data: "parent=" + parent,
+					dataType: "JSON",
+					success: function(json) {
+						if (json.state == 200) {
+							let list = json.data;
+							// console.log("count=" + list.length);
+							for (let i = 0; i < list.length; i++) {
+								// console.log(list[i].name);
+								let option = '<option value="' + list[i].code + '">' + list[i].name + '</option>';
+								$("#city-list").append(option);
+							}
+						}else{
+							alert("获取城市信息失败! ");
+						}
+					}
+				});
+			}
+
+			function showAreaList() {
+				let parent = $("#city-list").val();
+				$("#area-list").empty();
+				$("#area-list").append(defaultOption);
+
+				if (parent == 0) {
+					return;
+				}
+
+				$.ajax({
+					url: "/district",
+					type: "GET",
+					data: "parent=" + parent,
+					dataType: "JSON",
+					success: function(json) {
+						if (json.state == 200) {
+							let list = json.data;
+							// console.log("count=" + list.length);
+							for (let i = 0; i < list.length; i++) {
+								// console.log(list[i].name);
+								let option = '<option value="' + list[i].code + '">' + list[i].name + '</option>';
+								$("#area-list").append(option);
+							}
+						}
+					}
+				});
+			}
+
+			function showProvinceList(){
+				$.ajax({
+					url: "/district",
+					type: "GET",
+					data: "parent=86",
+					dataType: "JSON",
+					success: function (json) {
+						if(json.state == 200){
+							//alert("省/直辖市查询成功！");
+							let list = json.data;
+							for (let i = 0; i < list.length; i++) {
+								let opt = '<option value ='+list[i].code+'> '+list[i].name+' </option>'
+								$("#province-list").append(opt);
+							}
+						}else{
+							alert("省/直辖市查询失败！");
+						}
+					},
+					error: function (xhr) {
+						alert("添加收货地址时产生未知的错误！"+xhr.status);
+					}
+				});
+			}
 
 			$("#btn-add-new-address").click(function () {
 				$.ajax({

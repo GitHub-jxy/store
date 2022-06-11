@@ -1,8 +1,6 @@
 package com.jxy.store.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxy.store.entity.Address;
-import com.jxy.store.entity.TAddress;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +15,7 @@ public class AddressMapperTests {
 
     @Autowired
     AddressMapper addressMapper;
-    @Autowired
-    TAddressMapper tAddressMapper;
+
     @Test
     public void insertAddress(){
         Address address = new Address();
@@ -50,14 +47,6 @@ public class AddressMapperTests {
     public void countByUid(){
         Integer integer = addressMapper.countByUid(1);
         System.out.println(integer);
-    }
-
-    @Test
-    public void count(){
-        LambdaQueryWrapper<TAddress> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(TAddress::getUid,1);
-        Long aLong = tAddressMapper.selectCount(queryWrapper);
-        System.out.println(aLong);
     }
 
 }

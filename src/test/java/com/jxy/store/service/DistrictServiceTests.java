@@ -25,4 +25,12 @@ public class DistrictServiceTests {
         }
     }
 
+    @Test
+    public void district(){
+        List<District> byParent = districtService.getByParent("120000");
+        for (District district : byParent) {
+            System.out.println(district);
+        }
+    }
+
 }
