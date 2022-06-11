@@ -113,7 +113,9 @@
     </update>
 
     <select id="selectAddressByUid" resultMap="AddressEntityMap">
-        select * from t_address where uid = #{uid}
+        SELECT * FROM t_address
+        WHERE uid = #{uid}
+        ORDER BY is_default DESC ,created_time DESC
     </select>
 
 </mapper>

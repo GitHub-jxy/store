@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -56,16 +57,9 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Integer updateByIsDefault(Integer uid) {
-        Integer integer = addressMapper.countByUid(uid);
-        Address address = addressMapper.selectAddressByUid(uid);
-        Integer aid = address.getAid();
-        if (integer == 1) {
-            Integer result = addressMapper.updateByIsDefault(aid);
-            if (result == 1) {
-                System.out.println("查询出来的收货地址只有一条，则直接设置当前收货地址为默认地址");
-            }
-        }
-        return null;
+    public List<Address> selectAddressByUid(Integer uid) {
+        List<Address> list = addressMapper.selectAddressByUid(uid);
+        return list;
     }
+
 }

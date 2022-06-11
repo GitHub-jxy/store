@@ -2,6 +2,8 @@ package com.jxy.store.mapper;
 
 import com.jxy.store.entity.Address;
 
+import java.util.List;
+
 /**
  * 收货地址 mapper
  */
@@ -23,5 +25,10 @@ public interface AddressMapper {
 
     Integer updateByIsDefault(Integer aid);
 
-    Address selectAddressByUid(Integer uid);
+    /**
+     * 用过uid来查询用户的收货地址
+     * @param uid
+     * @return
+     */
+    List<Address> selectAddressByUid(Integer uid);
 }

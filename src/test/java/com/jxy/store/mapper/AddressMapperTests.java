@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -47,6 +48,15 @@ public class AddressMapperTests {
     public void countByUid(){
         Integer integer = addressMapper.countByUid(1);
         System.out.println(integer);
+    }
+
+    @Test
+    public void selectAddressByUid(){
+        List<Address> addresses = addressMapper.selectAddressByUid(1);
+        for (Address address : addresses) {
+            System.out.println(address);
+        }
+
     }
 
 }
