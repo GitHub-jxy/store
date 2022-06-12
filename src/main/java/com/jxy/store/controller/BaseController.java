@@ -63,6 +63,14 @@ public class BaseController {
             result.setState(7001);
             result.setMessage("收货地址超出限制异常");
         }
+        else if(e instanceof FileUploadIOException){
+            result.setState(7002);
+            result.setMessage("非法访问异常");
+        }
+        else if(e instanceof FileUploadIOException){
+            result.setState(7003);
+            result.setMessage("收货地址数据不存在异常");
+        }
 
         return result;
     }

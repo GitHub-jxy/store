@@ -1,6 +1,4 @@
-package com.jxy.store.service.impl;
-
-import com.jxy.store.service.ex.ServiceException;
+package com.jxy.store.service.ex;
 
 /** 非法访问的异常 */
 public class AccessDeniedException extends ServiceException {

@@ -289,12 +289,13 @@
 										'\t\t\t\t\t\t\t\t\t<td>#{phone}</td>\n' +
 										'\t\t\t\t\t\t\t\t\t<td><a class="btn btn-xs btn-info"><span class="fa fa-edit"></span> 修改</a></td>\n' +
 										'\t\t\t\t\t\t\t\t\t<td><a class="btn btn-xs add-del btn-info"><span class="fa fa-trash-o"></span> 删除</a></td>\n' +
-										'\t\t\t\t\t\t\t\t\t<td><a class="btn btn-xs add-def btn-default">设为默认</a></td>\n' +
+										'\t\t\t\t\t\t\t\t\t<td><a onclick="setDefault(#{aid})" class="btn btn-xs add-def btn-default">设为默认</a></td>\n' +
 										'\t\t\t\t\t\t\t\t</tr>';
 								tr = tr.replace("#{tag}",list[i].tag);
 								tr = tr.replace("#{name}",list[i].name);
 								tr = tr.replace("#{address}",list[i].address);
 								tr = tr.replace("#{phone}",list[i].phone);
+								tr = tr.replace("#{aid}",list[i].aid);
 								$("#address-list").append(tr);
 							}
 							//如果第一次出现，则隐藏”设为默认“按钮
@@ -327,6 +328,27 @@
 					}
 				})
 			});
+
+			function setDefault(aid){
+				$.ajax({
+					url: "/address/"+aid+"/set_default",
+					type: "POST",
+					dataType: "JSON",
+					success: function (json) {
+						if(json.state == 200){
+							// alert("添加收货地址成功！")
+							//重新调用 showAreaList() 函数
+							location.reload(true);
+						}else{
+							alert("设置默认收货地址失败！")
+						}
+					},
+					error: function (xhr) {
+						alert("设置默认收货地址时产生未知的错误！"+xhr.status)
+					}
+				})
+			}
+
 		</script>
 	</body>
 

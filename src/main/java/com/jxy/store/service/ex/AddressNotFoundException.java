@@ -1,6 +1,4 @@
-package com.jxy.store.service.impl;
-
-import com.jxy.store.service.ex.ServiceException;
+package com.jxy.store.service.ex;
 
 /** 收货地址数据不存在的异常 */
 public class AddressNotFoundException extends ServiceException {
