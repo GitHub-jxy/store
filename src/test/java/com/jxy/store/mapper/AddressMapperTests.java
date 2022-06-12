@@ -52,10 +52,47 @@ public class AddressMapperTests {
 
     @Test
     public void selectAddressByUid(){
-        List<Address> addresses = addressMapper.selectAddressByUid(1);
+        List<Address> addresses = addressMapper.findByUid(1);
         for (Address address : addresses) {
             System.out.println(address);
         }
+
+    }
+
+    @Test
+    public void findByAid(){
+        Address byAid = addressMapper.findByAid(1);
+        System.out.println(byAid);
+    }
+
+    @Test
+    public void updateNoDefault(){
+        Integer integer = addressMapper.updateNoDefault(1);
+        if (integer >= 1){
+            System.out.println("修改成功");
+        }
+    }
+
+    @Test
+    public void updateDefault(){
+        Integer integer = addressMapper.updateDefault(1, "张三", new Date());
+        if (integer >= 1){
+            System.out.println("修改成功");
+        }
+    }
+
+    @Test
+    public void deleteByAid(){
+        Integer integer = addressMapper.deleteByAid(2);
+        if (integer >= 1){
+            System.out.println("删除成功");
+        }
+    }
+
+    @Test
+    public void findByModifiedTime(){
+        Address byModifiedTime = addressMapper.findByModifiedTime(1);
+        System.out.println(byModifiedTime);
 
     }
 

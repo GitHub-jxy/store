@@ -105,17 +105,45 @@
     </insert>
 
     <select id="countByUid" resultType="java.lang.Integer">
-        select COUNT(*) from t_address where uid = #{uid}
+        select COUNT(*) from t_address
+        where uid = #{uid}
     </select>
 
     <update id="updateByIsDefault" parameterType="java.lang.Integer">
-        update t_address set is_default = 1 where aid = #{aid}
+        update t_address set is_default = 1
+        where aid = #{aid}
     </update>
 
-    <select id="selectAddressByUid" resultMap="AddressEntityMap">
+    <select id="findByUid" resultMap="AddressEntityMap">
         SELECT * FROM t_address
         WHERE uid = #{uid}
         ORDER BY is_default DESC ,created_time DESC
+    </select>
+
+    <select id="findByAid" resultMap="AddressEntityMap">
+        select * from t_address
+        where aid = #{aid}
+    </select>
+
+    <update id="updateNoDefault">
+        update t_address set is_default = 0
+        where uid = #{uid}
+    </update>
+
+    <update id="updateDefault">
+        update t_address set is_default = 1,modified_user = #{modifiedUser},modified_time = #{modifiedTime}
+        where aid = #{aid}
+    </update>
+
+    <delete id="deleteByAid">
+        delete from t_address where aid = #{aid}
+    </delete>
+
+    <select id="findByModifiedTime" resultMap="AddressEntityMap">
+        select * from t_address
+        where uid = #{uid}
+        ORDER BY modified_time desc
+        limit 0,1
     </select>
 
 </mapper>

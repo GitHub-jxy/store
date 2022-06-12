@@ -6,6 +6,7 @@ import com.jxy.store.service.AddressService;
 import com.jxy.store.service.DistrictService;
 import com.jxy.store.service.ex.AddressCountLimitException;
 import com.jxy.store.service.ex.InsertException;
+import com.jxy.store.service.ex.UpdateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -58,8 +59,27 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<Address> selectAddressByUid(Integer uid) {
-        List<Address> list = addressMapper.selectAddressByUid(uid);
+        List<Address> list = addressMapper.findByUid(uid);
         return list;
+    }
+
+    @Override
+    public void setDefault(Integer aid, Integer uid, String username) {
+        Address result = addressMapper.findByAid(aid);
+        if(result == null){
+            throw new AddressNotFoundException("未找到收货地址/收货地址异常");
+        }
+        if(result.getAid() != aid){
+            throw new AccessDeniedException("非法数据访问");
+        }
+        Integer row = addressMapper.updateNoDefault(uid);
+        if(row < 1){
+            throw new UpdateException("修改数据异常-noDefault");
+        }
+        Integer integer = addressMapper.updateDefault(aid, username, new Date());
+        if(integer < 1){
+            throw new UpdateException("修改数据异常-default");
+        }
     }
 
 }

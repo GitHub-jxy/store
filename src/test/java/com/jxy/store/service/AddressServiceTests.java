@@ -23,4 +23,10 @@ public class AddressServiceTests {
         addressService.addNewAddress(1,"张三",address);
     }
 
+    @Test
+    public void setDefault(){
+        //0-不默认，1-默认
+       addressService.setDefault(2,1,"张三");
+    }
+
 }
