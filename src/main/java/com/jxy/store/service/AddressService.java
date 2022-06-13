@@ -28,4 +28,13 @@ public interface AddressService {
      * @param username 修改者
      */
     void setDefault(Integer aid,Integer uid,String username);
+
+    /**
+     * 删除收货地址
+     * @param aid 收货地址id
+     * @param uid 用户id
+     * @param username 修改者
+     * @return 受影响的行数
+     */
+    void deleteAddressByAid(Integer aid,Integer uid,String username);
 }

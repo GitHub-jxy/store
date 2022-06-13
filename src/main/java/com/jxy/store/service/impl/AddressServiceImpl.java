@@ -8,6 +8,7 @@ import com.jxy.store.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -75,6 +76,37 @@ public class AddressServiceImpl implements AddressService {
             throw new UpdateException("修改数据异常-noDefault");
         }
         Integer integer = addressMapper.updateDefault(aid, username, new Date());
+        if(integer < 1){
+            throw new UpdateException("修改数据异常-default");
+        }
+    }
+
+    @Transactional
+    @Override
+    public void deleteAddressByAid(Integer aid, Integer uid, String username) {
+        Address result = addressMapper.findByAid(aid);
+        if(result == null){
+            throw new AddressNotFoundException("未找到收货地址/收货地址异常");
+        }
+        if(result.getAid() != aid){
+            throw new AccessDeniedException("非法数据访问");
+        }
+        Integer isDefault = result.getIsDefault();
+        //0-不默认，1-默认
+        if(isDefault==1){
+            System.out.println("删除的当前数据为默认的收货地址");
+            Integer row = addressMapper.updateNoDefault(uid);
+            if(row < 1){
+                throw new UpdateException("修改数据异常-noDefault");
+            }
+            Address byModifiedTime = addressMapper.findByModifiedTime(uid);
+            Integer newAid = byModifiedTime.getAid();
+            Integer integer = addressMapper.updateDefault(newAid, username, new Date());
+            if(integer < 1){
+                throw new UpdateException("修改数据异常-default");
+            }
+        }
+        Integer integer = addressMapper.deleteByAid(aid);
         if(integer < 1){
             throw new UpdateException("修改数据异常-default");
         }

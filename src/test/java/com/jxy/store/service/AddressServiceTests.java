@@ -29,4 +29,10 @@ public class AddressServiceTests {
        addressService.setDefault(2,1,"张三");
     }
 
+    @Test
+    public void deleteByAid(){
+        //0-不默认，1-默认
+        addressService.deleteAddressByAid(4,2,"张三");
+    }
+
 }
