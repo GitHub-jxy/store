@@ -1,8 +1,10 @@
 package com.jxy.store.mapper;
 
 import com.jxy.store.entity.Cart;
+import com.jxy.store.entity.CartVo;
 
 import java.util.Date;
+import java.util.List;
 
 // 购物车
 public interface CartMapper {
@@ -31,5 +33,12 @@ public interface CartMapper {
      * @return 返回查询出来的行数
      */
     Cart findByUidAndPid(Integer uid,Integer pid);
+
+    /**
+     * 查询出该用户的所有购物车信息
+     * @param uid 用户id
+     * @return 所有购物车信息
+     */
+    List<CartVo> findVoByUid(Integer uid);
 
 }

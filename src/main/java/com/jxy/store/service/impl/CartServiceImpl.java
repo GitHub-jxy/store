@@ -1,6 +1,7 @@
 package com.jxy.store.service.impl;
 
 import com.jxy.store.entity.Cart;
+import com.jxy.store.entity.CartVo;
 import com.jxy.store.entity.Product;
 import com.jxy.store.mapper.CartMapper;
 import com.jxy.store.service.CartService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 //购物车业务层
 @Service
@@ -60,6 +62,13 @@ public class CartServiceImpl implements CartService {
                 throw new InsertException("添加商品时，出现未知的异常");
             }
         }
+    }
+
+    @Override
+    public List<CartVo> getVOByUid(Integer uid) {
+        List<CartVo> voByUid = cartMapper.findVoByUid(uid);
+
+        return voByUid;
     }
 
 }

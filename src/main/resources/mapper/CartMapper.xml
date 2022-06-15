@@ -30,4 +30,12 @@
         select * from t_cart where uid = #{uid} and pid = #{pid}
     </select>
 
+    <select id="findVoByUid" resultType="com.jxy.store.entity.CartVo">
+        select c.cid,c.uid,c.pid,c.price,c.num,p.title,p.price as realPrice,p.image
+        from t_cart c, t_product p
+        where p.id = c.pid
+        and c.uid = #{uid}
+
+    </select>
+
 </mapper>

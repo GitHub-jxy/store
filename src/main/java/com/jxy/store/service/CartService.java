@@ -1,5 +1,9 @@
 package com.jxy.store.service;
 
+import com.jxy.store.entity.CartVo;
+
+import java.util.List;
+
 //购物车业务层
 public interface CartService {
 
@@ -11,5 +15,7 @@ public interface CartService {
      * @param username 谁修改的
      */
     void addToCart(Integer uid,Integer pid,Integer num,String username);
+
+    List<CartVo> getVOByUid(Integer uid);
 
 }

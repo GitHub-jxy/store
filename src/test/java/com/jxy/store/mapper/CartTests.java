@@ -1,6 +1,7 @@
 package com.jxy.store.mapper;
 
 import com.jxy.store.entity.Cart;
+import com.jxy.store.entity.CartVo;
 import org.junit.Test;
 import org.junit.platform.commons.util.StringUtils;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,6 +54,16 @@ public class CartTests {
             System.out.println(byUidAndPid);
         }else{
             System.out.println("空");
+        }
+
+    }
+
+    @Test
+    public void findVoByUid(){
+
+        List<CartVo> voByUid = cartMapper.findVoByUid(1);
+        for (CartVo cartVo : voByUid) {
+            System.out.println(cartVo);
         }
 
     }
