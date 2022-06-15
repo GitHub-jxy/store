@@ -44,8 +44,8 @@ public class MPUserServiceImpl extends ServiceImpl<MPUserMapper, TUser> implemen
 //        mpUserMapper.selectCount(tUsers);
         QueryWrapper<TUser> queryWrapper = new QueryWrapper<TUser>();
         queryWrapper.eq("is_delete",0);
-        Long aLong = mpUserMapper.selectCount(queryWrapper);
+        Integer aLong = Integer.valueOf(mpUserMapper.selectCount(queryWrapper).toString());
         System.out.println(aLong);
-        return null;
+        return aLong;
     }
 }
