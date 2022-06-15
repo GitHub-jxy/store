@@ -40,4 +40,10 @@ public class ProductTests {
         }
     }
 
+    @Test
+    public void findById(){
+        Product byId = productMapper.findById(1);
+        System.out.println(byId);
+    }
+
 }

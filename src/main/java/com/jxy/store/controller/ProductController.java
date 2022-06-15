@@ -4,6 +4,7 @@ import com.jxy.store.entity.Product;
 import com.jxy.store.service.ProductService;
 import com.jxy.store.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,12 @@ public class ProductController extends BaseController{
     public JsonResult<List<Product>> hotList(){
         List<Product> hotList = productService.findHotList();
         return new JsonResult<List<Product>>(OK,hotList);
+    }
+
+    @RequestMapping("{id}/details")
+    public JsonResult<Product> details(@PathVariable("id") Integer id){
+        Product data = productService.findById(id);
+        return new JsonResult<Product>(OK,data);
     }
 
 }

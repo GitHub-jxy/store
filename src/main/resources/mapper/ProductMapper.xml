@@ -29,4 +29,8 @@
         select * from t_product where status = 1 order by priority desc limit 0,4
     </select>
 
+    <select id="findById" resultType="com.jxy.store.entity.Product">
+        select * from t_product where id = #{id}
+    </select>
+
 </mapper>
