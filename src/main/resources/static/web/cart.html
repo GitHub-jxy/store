@@ -314,6 +314,8 @@
 
 							if (list[i].realPrice > list[i].price) {
 								tr = tr.replace(/#{msg}/g, "比加入时降价" + (list[i].price - list[i].realPrice) + "元");
+							} else if (list[i].realPrice < list[i].price){
+								tr = tr.replace(/#{msg}/g, "比加入时上调了" + (list[i].realPrice - list[i].price) + "元");
 							} else {
 								tr = tr.replace(/#{msg}/g, "");
 							}
