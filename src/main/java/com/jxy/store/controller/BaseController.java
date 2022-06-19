@@ -71,6 +71,14 @@ public class BaseController {
             result.setState(7003);
             result.setMessage("收货地址数据不存在异常");
         }
+        else if(e instanceof CartNotFoundException){
+            result.setState(7004);
+            result.setMessage("收货地址数据不存在异常");
+        }
+        else if(e instanceof CartException){
+            result.setState(7005);
+            result.setMessage("收货内部数据异常");
+        }
 
         return result;
     }

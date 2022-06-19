@@ -296,9 +296,9 @@
 									+ '<td>#{title}#{msg}</td>'
 									+ '<td>¥<span id="price-#{cid}">#{realPrice}</span></td>'
 									+ '<td>'
-									+ 	'<input type="button" value="-" class="num-btn" onclick="reduceNum(1)" />'
+									+ 	'<input id="num-" class="num-" type="button" value="-" onclick="reduceNum(#{cid})" />'
 									+ 	'<input id="num-#{cid}" type="text" size="2" readonly="readonly" class="num-text" value="#{num}">'
-									+ 	'<input class="num-btn" type="button" value="+" onclick="addNum(#{cid})" />'
+									+ 	'<input id="num+" class="num+" type="button" value="+" onclick="addNum(#{cid})" />'
 									+ '</td>'
 									+ '<td>¥<span id="total-price-#{cid}">#{totalPrice}</span></td>'
 									+ '<td>'
@@ -321,6 +321,55 @@
 							}
 							$("#cart-list").append(tr);
 						}
+					}
+				});
+			}
+
+			function addNum(cid) {
+				$.ajax({
+					url: "/carts/" + cid + "/num/add",
+					type: "POST",
+					dataType: "JSON",
+					success: function(json) {
+						if (json.state == 200) {
+							// '<input class="num+" type="button" value="+" onclick="addNum(#{cid})" />'
+							alert($("#num+" + cid).val(json.data));
+							alert($("#num+" + cid));
+							$("#num+" + cid).val(json.data);
+							let price = $("#price-" + cid).html();
+							let totalPrice = price * json.data;
+							$("#total-price-" + cid).html(totalPrice);
+						} else {
+							alert("增加商品数量失败！" + json.message);
+						}
+					},
+					error: function(xhr) {
+						alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+						location.href = "login.html";
+					}
+				});
+			}
+
+			function reduceNum(cid) {
+				$.ajax({
+					url: "/carts/" + cid + "/num/reduce",
+					type: "POST",
+					dataType: "JSON",
+					success: function(json) {
+						if (json.state == 200) {
+							// showCartList();
+							//'<input type="button" value="-" class="num+btn" onclick="reduceNum(1)" />'
+							$("#num-" + cid).val(json.data);
+							let price = $("#price-" + cid).html();
+							let totalPrice = price * json.data;
+							$("#total-price-" + cid).html(totalPrice);
+						} else {
+							alert("增加商品数量失败！" + json.message);
+						}
+					},
+					error: function(xhr) {
+						alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+						location.href = "login.html";
 					}
 				});
 			}

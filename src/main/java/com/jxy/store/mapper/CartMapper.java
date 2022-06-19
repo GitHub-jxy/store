@@ -41,4 +41,11 @@ public interface CartMapper {
      */
     List<CartVo> findVoByUid(Integer uid);
 
+    /**
+     * 根据cid查询数据
+     * @param cid 购物车id
+     * @return 返回Cart类型的数据
+     */
+    Cart findByCid(Integer cid);
+
 }

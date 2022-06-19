@@ -35,7 +35,10 @@
         from t_cart c, t_product p
         where p.id = c.pid
         and c.uid = #{uid}
+    </select>
 
+    <select id="findByCid" resultMap="CartEntityMap">
+         select * from t_cart where cid = #{cid}
     </select>
 
 </mapper>

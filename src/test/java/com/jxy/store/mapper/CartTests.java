@@ -3,7 +3,6 @@ package com.jxy.store.mapper;
 import com.jxy.store.entity.Cart;
 import com.jxy.store.entity.CartVo;
 import org.junit.Test;
-import org.junit.platform.commons.util.StringUtils;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,6 +64,14 @@ public class CartTests {
         for (CartVo cartVo : voByUid) {
             System.out.println(cartVo);
         }
+
+    }
+
+    @Test
+    public void findByCid(){
+
+        Cart byCid = cartMapper.findByCid(1);
+        System.out.println(byCid);
 
     }
 

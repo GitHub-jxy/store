@@ -6,8 +6,7 @@ import com.jxy.store.entity.Product;
 import com.jxy.store.mapper.CartMapper;
 import com.jxy.store.service.CartService;
 import com.jxy.store.service.ProductService;
-import com.jxy.store.service.ex.InsertException;
-import com.jxy.store.service.ex.UpdateException;
+import com.jxy.store.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +32,9 @@ public class CartServiceImpl implements CartService {
             Integer cid = cart.getCid();
             //进行修改
             Integer integer = cartMapper.updateNumByCid(cid, num, username, new Date());
-            if(integer>=1){
+            if (integer >= 1) {
                 System.out.println("修改成功");
-            }else{
+            } else {
                 throw new UpdateException("修改商品数量时，异常！");
             }
         } else {
@@ -56,9 +55,9 @@ public class CartServiceImpl implements CartService {
             newCart.setModifiedUser(username);
             newCart.setModifiedTime(new Date());
             Integer insert = cartMapper.insert(newCart);
-            if(insert>=1){
-                System.out.println("添加成功");
-            }else{
+            if (insert >= 1) {
+//                System.out.println("添加成功");
+            } else {
                 throw new InsertException("添加商品时，出现未知的异常");
             }
         }
@@ -69,6 +68,54 @@ public class CartServiceImpl implements CartService {
         List<CartVo> voByUid = cartMapper.findVoByUid(uid);
 
         return voByUid;
+    }
+
+    @Override
+    public Integer addNum(Integer uid, Integer cid, String username) {
+        Cart result = cartMapper.findByCid(cid);
+        if (result == null) {
+            throw new CartNotFoundException("购物车数据不存在");
+        }
+        if (!result.getCid().equals(cid)) {
+            throw new AccessDeniedException("非法访问");
+        }
+
+        int num = result.getNum() + 1;
+
+        Integer integer = cartMapper.updateNumByCid(cid, num, username, new Date());
+        if (integer != 1) {
+            throw new UpdateException("更新数量的时候出现异常");
+        }
+
+        return num;
+    }
+
+    @Override
+    public Integer reduceNum(Integer uid, Integer cid, String username) {
+        Cart result = cartMapper.findByCid(cid);
+        if (result == null) {
+            throw new CartNotFoundException("购物车数据不存在");
+        }
+        if (!result.getCid().equals(cid)) {
+            throw new AccessDeniedException("非法访问");
+        }
+        Integer num = result.getNum();
+        if (num < 1) {
+            throw new CartException("数据异常");
+        }
+        if (num == 1) {
+            throw new CartException("数量已经为1，不能减少");
+        }else{
+            num--;
+        }
+//        int num = result.getNum() - 1;
+
+        Integer integer = cartMapper.updateNumByCid(cid, num, username, new Date());
+        if (integer != 1) {
+            throw new UpdateException("更新数量的时候出现异常");
+        }
+
+        return num;
     }
 
 }
