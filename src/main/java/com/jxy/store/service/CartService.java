@@ -36,4 +36,12 @@ public interface CartService {
      */
     Integer reduceNum(Integer uid,Integer cid,String username);
 
+    /**
+     * 根据购物车的若干数据id，查询详情列表
+     * @param uid 用户id
+     * @param cids 购物车物品id
+     * @return 购物车数据列表
+     */
+    List<CartVo>getVOByCids(Integer uid,Integer[] cids);
+
 }

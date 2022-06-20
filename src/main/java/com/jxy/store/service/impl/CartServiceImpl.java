@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 //购物车业务层
@@ -116,6 +117,21 @@ public class CartServiceImpl implements CartService {
         }
 
         return num;
+    }
+
+    @Override
+    public List<CartVo> getVOByCids(Integer uid, Integer[] cids) {
+
+        List<CartVo> list = cartMapper.findVoByCid(cids);
+        Iterator<CartVo> iterator = list.iterator();
+        while (iterator.hasNext()){
+            CartVo cart = iterator.next();
+            if(!cart.getUid().equals(uid)){
+                iterator.remove();
+            }
+        }
+
+        return list;
     }
 
 }

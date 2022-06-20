@@ -41,4 +41,16 @@
          select * from t_cart where cid = #{cid}
     </select>
 
+    <select id="findVoByCid" resultType="com.jxy.store.entity.CartVo">
+        select c.cid,c.uid,c.pid,c.price,c.num,p.title,p.price as realPrice,p.image
+        from t_cart c, t_product p
+        where p.id = c.pid
+        and c.cid in (
+            <foreach collection="array" item="cid" separator=",">
+                        #{cid}
+            </foreach>
+        )
+        order by c.modified_time desc
+    </select>
+
 </mapper>
